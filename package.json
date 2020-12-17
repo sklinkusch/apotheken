@@ -1,0 +1,18 @@
+{
+  "name": "apotheken",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Stefan Klinkusch <stefan.klinkusch@googlemail.com> (https://sklinkusch.now.sh)",
+  "license": "MIT",
+  "dependencies": {
+    "fs-ndjson": "^1.1.0",
+    "express": "^4.17.1",
+    "z1p": "^0.1.0",
+    "@z1p/de": "^0.0.4"
+  }
+}
