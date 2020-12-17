@@ -11,10 +11,10 @@
   "author": "Stefan Klinkusch <stefan.klinkusch@googlemail.com> (https://sklinkusch.now.sh)",
   "license": "MIT",
   "dependencies": {
-    "fs-ndjson": "^1.1.0",
+    "@z1p/de": "^0.0.4",
     "express": "^4.17.1",
-    "z1p": "^0.1.0",
-    "@z1p/de": "^0.0.4"
+    "fs-ndjson": "^1.1.0",
+    "z1p": "^0.1.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
