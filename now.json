@@ -4,6 +4,10 @@
   "builds": [
     {
       "src": "index.js",
+      "use": "@z1p/de"
+    },
+    {
+      "src": "index.js",
       "use": "@now/node"
     }
   ],
