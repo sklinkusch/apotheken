@@ -19,7 +19,7 @@ function getDistance(lat_a, lng_a, lat_b, lng_b) {
 
 async function geotodata(req, res) {
   const { lat: centerLatitude, lng: centerLongitude } = req.query
-  const apothekenliste = await fsNdjson.readFileSync("./apothekenliste.ndjson")
+  const apothekenliste = await fsNdjson.readFileSync("apothekenliste.ndjson")
   const [apolist] = await apothekenliste
   const { retailerStoreList } = await apolist
   const apothekenWithDistance = retailerStoreList.map((store) => {
@@ -54,7 +54,7 @@ async function ziptodata(req, res) {
   const zipPlaces = z1p(["DE"]).findBy("zip_code", `${zipCode}`)
   const [zipPlace] = zipPlaces
   const { latitude: centerLatitude, longitude: centerLongitude } = zipPlace
-  const apothekenliste = await fsNdjson.readFileSync("./apothekenliste.ndjson")
+  const apothekenliste = await fsNdjson.readFileSync("apothekenliste.ndjson")
   const [apolist] = await apothekenliste
   const { retailerStoreList } = await apolist
   const apothekenWithDistance = await retailerStoreList.map((store) => {
