@@ -1,19 +1,7 @@
 {
-  "version": 2,
-  "name": "apotheken",
-  "builds": [
-    {
-      "src": "index.js",
-      "use": "@now/node"
+  "build": {
+    "env": {
+      "NODEJS_HELPERS": "0"
     }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/index.js",
-      "headers": {
-        "cache-control": "s-maxage=31536000,immutable"
-      }
-    }
-  ]
+  }
 }
