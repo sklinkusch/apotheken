@@ -1,6 +1,8 @@
 const express = require("express")
 const app = express()
 const fsNdjson = require("fs-ndjson")
+const fs = require("fs")
+const pharmacyList = require("./apothekenliste.json")
 const z1p = require("z1p")
 
 function getDistance(lat_a, lng_a, lat_b, lng_b) {
@@ -19,34 +21,36 @@ function getDistance(lat_a, lng_a, lat_b, lng_b) {
 
 async function geotodata(req, res) {
   const { lat: centerLatitude, lng: centerLongitude } = req.query
-  const apothekenliste = await fsNdjson.readFileSync("apothekenliste.ndjson")
-  const [apolist] = await apothekenliste
-  const { retailerStoreList } = await apolist
-  const apothekenWithDistance = retailerStoreList.map((store) => {
-    const { storeCoordinates } = store
-    const { latitude, longitude } = storeCoordinates
-    const distance = getDistance(
-      centerLatitude,
-      centerLongitude,
-      latitude,
-      longitude
+  try {
+    const { retailerStoreList } = await pharmacyList
+    const apothekenWithDistance = retailerStoreList.map((store) => {
+      const { storeCoordinates } = store
+      const { latitude, longitude } = storeCoordinates
+      const distance = getDistance(
+        centerLatitude,
+        centerLongitude,
+        latitude,
+        longitude
+      )
+      return { ...store, distance }
+    })
+    const apothekenWithSortedDistance = apothekenWithDistance.sort(
+      (a, b) => a.distance - b.distance
     )
-    return { ...store, distance }
-  })
-  const apothekenWithSortedDistance = apothekenWithDistance.sort(
-    (a, b) => a.distance - b.distance
-  )
-  const truncatedApothekenWithDistance = apothekenWithSortedDistance.slice(
-    0,
-    50
-  )
-  const truncatedApotheken = truncatedApothekenWithDistance.map((store) => {
-    const { distance, ...remainingStore } = store
-    return { ...remainingStore }
-  })
-  return res
-    .status(200)
-    .json({ retailerName: "Apotheke", retailerStoreList: truncatedApotheken })
+    const truncatedApothekenWithDistance = apothekenWithSortedDistance.slice(
+      0,
+      50
+    )
+    const truncatedApotheken = truncatedApothekenWithDistance.map((store) => {
+      const { distance, ...remainingStore } = store
+      return { ...remainingStore }
+    })
+    return res
+      .status(200)
+      .json({ retailerName: "Apotheke", retailerStoreList: truncatedApotheken })
+  } catch (err) {
+    return res.status(500).json({ error: { message: err } })
+  }
 }
 
 async function ziptodata(req, res) {
