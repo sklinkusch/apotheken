@@ -1,9 +1,7 @@
 const express = require("express")
 const app = express()
-const fsNdjson = require("fs-ndjson")
-const fs = require("fs")
 const pharmacyList = require("./apothekenliste.json")
-const z1p = require("z1p")
+const zipList = require("./zipcode.json")
 
 function getDistance(lat_a, lng_a, lat_b, lng_b) {
   // bring angles from degrees to radians
@@ -37,9 +35,8 @@ async function geotodata(req, res) {
     const apothekenWithSortedDistance = apothekenWithDistance.sort(
       (a, b) => a.distance - b.distance
     )
-    const truncatedApothekenWithDistance = apothekenWithSortedDistance.slice(
-      0,
-      50
+    const truncatedApothekenWithDistance = apothekenWithSortedDistance.filter(
+      (store) => store.distance <= 15
     )
     const truncatedApotheken = truncatedApothekenWithDistance.map((store) => {
       const { distance, ...remainingStore } = store
@@ -55,12 +52,10 @@ async function geotodata(req, res) {
 
 async function ziptodata(req, res) {
   const { zip: zipCode } = req.query
-  const zipPlaces = z1p(["DE"]).findBy("zip_code", `${zipCode}`)
-  const [zipPlace] = zipPlaces
-  const { latitude: centerLatitude, longitude: centerLongitude } = zipPlace
-  const apothekenliste = await fsNdjson.readFileSync("apothekenliste.ndjson")
-  const [apolist] = await apothekenliste
-  const { retailerStoreList } = await apolist
+  const { latitude: centerLatitude, longitude: centerLongitude } = zipList[
+    `${zipCode}`
+  ]
+  const { retailerStoreList } = await pharmacyList
   const apothekenWithDistance = await retailerStoreList.map((store) => {
     const { storeCoordinates } = store
     const { latitude, longitude } = storeCoordinates
@@ -75,9 +70,8 @@ async function ziptodata(req, res) {
   const apothekenWithSortedDistance = apothekenWithDistance.sort(
     (a, b) => a.distance - b.distance
   )
-  const truncatedApothekenWithDistance = apothekenWithSortedDistance.slice(
-    0,
-    50
+  const truncatedApothekenWithDistance = apothekenWithSortedDistance.filter(
+    (store) => store.distance <= 15
   )
   const truncatedApotheken = truncatedApothekenWithDistance.map((store) => {
     const { distance, ...remainingStore } = store
