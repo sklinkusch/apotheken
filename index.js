@@ -42,6 +42,8 @@ async function geotodata(req, res) {
       const { distance, ...remainingStore } = store
       return { ...remainingStore }
     })
+    res.setHeader("Access-Control-Allow-Origin", "*")
+    res.setHeader("Content-Type", "application/json")
     return res
       .status(200)
       .json({ retailerName: "Apotheke", retailerStoreList: truncatedApotheken })
@@ -77,12 +79,16 @@ async function ziptodata(req, res) {
     const { distance, ...remainingStore } = store
     return { ...remainingStore }
   })
+  res.setHeader("Access-Control-Allow-Origin", "*")
+  res.setHeader("Content-Type", "application/json")
   return res
     .status(200)
     .json({ retailerName: "Apotheke", retailerStoreList: truncatedApotheken })
 }
 
 function wrongEndpoint(req, res) {
+  res.setHeader("Access-Control-Allow-Origin", "*")
+  res.setHeader("Content-Type", "application/json")
   return res
     .status(400)
     .json({ error: { message: "The endpoint you used does not exist." } })
