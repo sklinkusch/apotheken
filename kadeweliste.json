@@ -10,7 +10,7 @@
         "zipCode": "10789",
         "city": "Berlin"
       },
-      "storeCoordinates": { "latitude": 52.501667, "longitude": 13.341111 }
+      "storeCoordinates": { "latitude": "52.501667", "longitude": "13.341111" }
     },
     {
       "storeLogo": "KaDeWe",
@@ -21,7 +21,7 @@
         "zipCode": "20354",
         "city": "Hamburg"
       },
-      "storeCoordinates": { "latitude": 53.553131, "longitude": 9.991414 }
+      "storeCoordinates": { "latitude": "53.553131", "longitude": "9.991414" }
     },
     {
       "storeLogo": "KaDeWe",
@@ -32,7 +32,10 @@
         "zipCode": "80331",
         "city": "München"
       },
-      "storeCoordinates": { "latitude": 48.1390541, "longitude": 11.5676592 }
+      "storeCoordinates": {
+        "latitude": "48.1390541",
+        "longitude": "11.5676592"
+      }
     }
   ],
   "_type": "retailer"
