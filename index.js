@@ -28,7 +28,7 @@ async function geotodata(req, res) {
     const retailerStoreList = [
       ...pharmacyStoreList,
       ...muellerStoreList,
-      ...kadeweStoreList,
+      // ...kadeweStoreList,
     ]
     const apothekenWithDistance = retailerStoreList.map((store) => {
       const { storeCoordinates } = store
@@ -72,7 +72,7 @@ async function ziptodata(req, res) {
   const retailerStoreList = [
     ...pharmacyStoreList,
     ...muellerStoreList,
-    ...kadeweStoreList,
+    // ...kadeweStoreList,
   ]
   const apothekenWithDistance = await retailerStoreList.map((store) => {
     const { storeCoordinates } = store
