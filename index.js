@@ -2,6 +2,7 @@ const express = require("express")
 const app = express()
 const pharmacyList = require("./apothekenliste.json")
 const muellerList = require("./muellerliste.json")
+const kadeweList = require("./kadeweliste.json")
 const zipList = require("./zipcode.json")
 
 function getDistance(lat_a, lng_a, lat_b, lng_b) {
@@ -23,7 +24,12 @@ async function geotodata(req, res) {
   try {
     const { retailerStoreList: pharmacyStoreList } = await pharmacyList
     const { retailerStoreList: muellerStoreList } = await muellerList
-    const retailerStoreList = [...pharmacyStoreList, ...muellerStoreList]
+    const { retailerStoreList: kadeweStoreList } = await kadeweList
+    const retailerStoreList = [
+      ...pharmacyStoreList,
+      ...muellerStoreList,
+      ...kadeweStoreList,
+    ]
     const apothekenWithDistance = retailerStoreList.map((store) => {
       const { storeCoordinates } = store
       const { latitude, longitude } = storeCoordinates
@@ -62,7 +68,12 @@ async function ziptodata(req, res) {
   ]
   const { retailerStoreList: pharmacyStoreList } = await pharmacyList
   const { retailerStoreList: muellerStoreList } = await muellerList
-  const retailerStoreList = [...pharmacyStoreList, ...muellerStoreList]
+  const { retailerStoreList: kadeweStoreList } = await kadeweList
+  const retailerStoreList = [
+    ...pharmacyStoreList,
+    ...muellerStoreList,
+    ...kadeweStoreList,
+  ]
   const apothekenWithDistance = await retailerStoreList.map((store) => {
     const { storeCoordinates } = store
     const { latitude, longitude } = storeCoordinates
