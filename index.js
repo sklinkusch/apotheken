@@ -3,7 +3,7 @@ const app = express()
 const pharmacyList = require("./apothekenliste.json")
 // const muellerList = require("./muellerliste.json")
 const kadeweList = require("./kadeweliste.json")
-const douglasList = require("../douglasliste.json")
+const douglasList = require("./douglasliste.json")
 const zipList = require("./zipcode.json")
 
 function getDistance(lat_a, lng_a, lat_b, lng_b) {
